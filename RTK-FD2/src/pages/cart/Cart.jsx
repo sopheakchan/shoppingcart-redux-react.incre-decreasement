@@ -38,8 +38,8 @@ const Cart = () => {
           />
         ))}
         <div className="mt-4">
-          <h5 className="text-lg font-bold leading-none text-gray-900 dark:text-white absolute rounded-sm p-1 border bg-slate-300">
-            <div className="relative">Total Price: {totalPrice.toFixed(2)}$</div>
+        <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            Total Price: {totalPrice.toFixed(2)}$
           </h5>
         </div>
       </section>

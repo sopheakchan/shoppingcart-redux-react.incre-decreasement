@@ -40,7 +40,7 @@ const ProductInCard = ({ image, title, price, id, desc, qty, totalPrice }) => {
                 </div>
               </div>
               <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                {price*qty}$
+                {(price*qty).toFixed(2)}$
               </div>
             </div>
 

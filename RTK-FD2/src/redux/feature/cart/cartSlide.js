@@ -6,7 +6,7 @@ const initialState = {
   cartItems: [],
   totalItems: 0,
   quantity: 0,
-  totalPrice:0
+  totalPrice: 0,
 };
 
 export const cartSlide = createSlice({
@@ -20,52 +20,72 @@ export const cartSlide = createSlice({
         (item) => item.id === action.payload.id
       );
       //if product existed, increase qty
-      if(existingProduct){
-        state.cartItems.map((item)=>{
-          if(item.id === action.payload.id){
-            item.qty +=1;
-            state.totalItems +=1;
-            
+      if (existingProduct) {
+        state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            item.qty += 1;
+            state.totalItems += 1;
           }
         });
       } else {
         state.totalItems += 1;
         state.cartItems.push(action.payload);
       }
+      // Update totalPrice
+      state.totalPrice = state.cartItems.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      );
     },
-    increaseQty: (state, action)=>{
+    increaseQty: (state, action) => {
       //if product is existed
-        state.cartItems.map((item)=>{
-          if (item.id === action.payload.id){
-            item.qty +=1;
-            state.totalItems +=1;
-          }
-        })
+      state.cartItems.map((item) => {
+        if (item.id === action.payload.id) {
+          item.qty += 1;
+          state.totalItems += 1;
+          // Update totalPrice
+          state.totalPrice = state.cartItems.reduce(
+            (total, item) => total + item.price * item.qty,
+            0
+          );
+        }
+      });
     },
     //please remember filter return new-array
-    decreaseQty: (state, action)=>{
-      state.cartItems.map((item)=>{
-        if (item.id === action.payload.id && item.qty ===1){
+    decreaseQty: (state, action) => {
+      state.cartItems.map((item) => {
+        if (item.id === action.payload.id && item.qty === 1) {
           state.cartItems = state.cartItems.filter(
             (item) => item.id !== action.payload.id
           );
-          state.totalItems -=1;
-        }else if(item.id === action.payload.id && item.qty>1){
-          item.qty -=1;
-          state.totalItems -=1;
+          state.totalItems -= 1;
+          state.totalPrice = state.cartItems.reduce(
+            (total, item) => total + item.price * item.qty,
+            0
+          );
+        } else if (item.id === action.payload.id && item.qty > 1) {
+          item.qty -= 1;
+          state.totalItems -= 1;
+          // Update totalPrice
+          state.totalPrice = state.cartItems.reduce(
+            (total, item) => total + item.price * item.qty,
+            0
+          );
         }
-      })
+      });
     },
-    removeAll: (state)=>{
+    removeAll: (state) => {
       state.cartItems = [];
-      state.totalItems =0;
+      state.totalItems = 0;
       state.quantity = 0;
-    }
+      state.totalPrice = 0;
+    },
   },
 });
 
 //export action
-export const { addToCart, increaseQty, decreaseQty, removeAll } = cartSlide.actions;
+export const { addToCart, increaseQty, decreaseQty, removeAll } =
+  cartSlide.actions;
 
 //export selector
 export const selectorTotalItems = (state) => state?.cart.totalItems;
