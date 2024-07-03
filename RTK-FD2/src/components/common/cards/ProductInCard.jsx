@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { decreaseQty, increaseQty, removeAll } from "../../../redux/feature/cart/cartSlide";
 
-const ProductInCard = ({ image, title, price, id, desc, qty }) => {
+const ProductInCard = ({ image, title, price, id, desc, qty, totalPrice }) => {
     const dispatch = useDispatch();
     //handle increase product
     const handleIncreaseProduct = ()=>{
@@ -40,8 +40,12 @@ const ProductInCard = ({ image, title, price, id, desc, qty }) => {
                 </div>
               </div>
               <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                {price}$
+                {price*qty}$
               </div>
+            </div>
+
+            <div>
+              <p></p>
             </div>
           </li>
         </ul>

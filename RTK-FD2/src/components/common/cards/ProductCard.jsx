@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart} from "../../../redux/feature/cart/cartSlide";
 
-export function ProductCard({ image, title, price, id , desc, qty}) {
+export function ProductCard({ image, title, price, id , desc, qty, totalPrice}) {
   const dispatch = useDispatch();
   //   console.log(image);
   //function handle add to cart
   const handleAddToCart = ()=>{
-    dispatch(addToCart({image, title,price, id, desc,qty}));
+    dispatch(addToCart({image, title,price, id, desc,qty,totalPrice}));
   }
 
   return (

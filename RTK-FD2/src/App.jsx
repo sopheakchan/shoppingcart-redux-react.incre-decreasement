@@ -30,6 +30,7 @@ function App() {
               desc={product.desc}
               id={product.id}
               qty={1}
+              totalPrice={product.totalPrice}
             />
           );
         })}

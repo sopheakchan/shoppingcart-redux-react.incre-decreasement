@@ -1,14 +1,17 @@
-import { Card } from "flowbite-react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectorTotalPrice, selectCartItems, removeAll } from "../../redux/feature/cart/cartSlide";
 import ProductInCard from "../../components/common/cards/ProductInCard";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems } from "../../redux/feature/cart/cartSlide";
-import { removeAll } from "../../redux/feature/cart/cartSlide";
-export default function Cart() {
-  const dispatch = useDispatch();
+
+const Cart = () => {
+  const totalPrice = useSelector(selectorTotalPrice);
   const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+
   const handleRemoveAll = () => {
     dispatch(removeAll());
   };
+
   return (
     <section className="flex justify-center mt-5">
       <section className="max-w-sm items-center w-1/2 bg-slate-100 p-5 rounded-m overflow-scroll h-[80vh]">
@@ -17,26 +20,31 @@ export default function Cart() {
             Shopping Cart
           </h5>
           <button
-            onClick={()=>handleRemoveAll()}
+            onClick={handleRemoveAll}
             className="text-sm font-medium text-red-600 hover:underline dark:text-cyan-500"
           >
             Remove all
           </button>
         </div>
-        {cartItems.map((cartItems, index) => {
-          return (
-            <ProductInCard
-              key={index}
-              image={cartItems.image}
-              title={cartItems.title}
-              desc={cartItems.desc}
-              id={cartItems.id}
-              price={cartItems.price}
-              qty={cartItems.qty}
-            />
-          );
-        })}
+        {cartItems.map((cartItem, index) => (
+          <ProductInCard
+            key={index}
+            image={cartItem.image}
+            title={cartItem.title}
+            desc={cartItem.desc}
+            id={cartItem.id}
+            price={cartItem.price}
+            qty={cartItem.qty}
+          />
+        ))}
+        <div className="mt-4">
+          <h5 className="text-lg font-bold leading-none text-gray-900 dark:text-white absolute rounded-sm p-1 border bg-slate-300">
+            <div className="relative">Total Price: {totalPrice.toFixed(2)}$</div>
+          </h5>
+        </div>
       </section>
     </section>
   );
-}
+};
+
+export default Cart;

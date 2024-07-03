@@ -6,6 +6,7 @@ const initialState = {
   cartItems: [],
   totalItems: 0,
   quantity: 0,
+  totalPrice:0
 };
 
 export const cartSlide = createSlice({
@@ -24,7 +25,7 @@ export const cartSlide = createSlice({
           if(item.id === action.payload.id){
             item.qty +=1;
             state.totalItems +=1;
-
+            
           }
         });
       } else {
@@ -69,6 +70,7 @@ export const { addToCart, increaseQty, decreaseQty, removeAll } = cartSlide.acti
 //export selector
 export const selectorTotalItems = (state) => state?.cart.totalItems;
 export const selectCartItems = (state) => state?.cart.cartItems;
+export const selectorTotalPrice = (state) => state?.cart.totalPrice;
 //in case cart-reducer haven't added to store, we need add it first bcz we need select elements from store
 
 //export reducer
